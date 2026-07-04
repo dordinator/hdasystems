@@ -4,12 +4,12 @@
 // businesses. Flat £299/mo. Built to feel world-class.
 // ─────────────────────────────────────────────────────────────
 
-export const BRAND = "PARALLAX";
+export const BRAND = "HDA Solutions";
 export const BRAND_TAGLINE = "Websites engineered to win customers";
 // GoHighLevel booking widget — used for every "book a call" CTA.
 export const CAL_URL =
   "https://api.leadconnectorhq.com/widget/booking/GDQp7qTfhXknyIgF1MrZ";
-export const EMAIL = "hello@parallax.studio";
+export const EMAIL = "hello@hdasolutions.co.uk";
 
 export const nav = [
   { label: "Work", href: "#work" },
@@ -103,7 +103,7 @@ export const transform = {
   },
   after: {
     label: "After",
-    name: "Built by PARALLAX",
+    name: "Built by HDA Solutions",
     points: ["Premium & fast", "Quote funnel built in", "Ranking & converting"],
   },
 };
@@ -165,7 +165,7 @@ export const chatbot = {
   eyebrow: "Live demo",
   heading: "Meet your 24/7 assistant.",
   sub: "This is the kind of AI assistant we can put on your site. Ask it anything.",
-  greeting: "Hi! I'm the PARALLAX assistant. Ask me about pricing, timelines or what's included.",
+  greeting: "Hi! I'm the HDA Solutions assistant. Ask me about pricing, timelines or what's included.",
   suggestions: [
     {
       q: "How much does it cost?",

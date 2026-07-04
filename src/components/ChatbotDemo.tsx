@@ -98,7 +98,7 @@ export default function ChatbotDemo() {
                 </span>
                 <div>
                   <div className="text-sm font-semibold text-ink">
-                    PARALLAX Assistant
+                    HDA Solutions Assistant
                   </div>
                   <div className="font-mono text-[10px] uppercase tracking-[0.15em] text-emerald-400">
                     Online

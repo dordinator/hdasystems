@@ -12,7 +12,7 @@ import {
 import { Suspense, useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const SCENE_READY_EVENT = "parallax:scene-ready";
+const SCENE_READY_EVENT = "hda:scene-ready";
 
 // Tells the preloader the scene is fully rendered (incl. environment),
 // so it can fade out without the orb popping in afterwards.

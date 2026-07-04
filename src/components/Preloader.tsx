@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
-const SCENE_READY_EVENT = "parallax:scene-ready";
+const SCENE_READY_EVENT = "hda:scene-ready";
 const MIN_SHOW_MS = 500; // avoid a flicker on fast/cached loads
 const MAX_WAIT_MS = 4500; // hard fallback so it never hangs
 
@@ -67,7 +67,7 @@ export default function Preloader() {
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent-teal" />
           </span>
           <span className="text-lg font-semibold tracking-tight text-ink">
-            PARALLAX
+            HDA Solutions
           </span>
         </div>
 
