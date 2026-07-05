@@ -78,7 +78,7 @@ export const caseStudies: CaseStudy[] = [
     blurb: "A polished renovation brand with a quote funnel, transformations slider and social proof front and centre.",
     tags: ["Web design", "Quote funnel", "Reviews"],
     accent: "#c99a5b",
-    url: "https://dordinator.github.io/kitched-bathroom-demo/",
+    url: "https://haza1410.github.io/kitched-bathroom-demo/",
   },
   {
     title: "Tillett & Saunders",
@@ -95,7 +95,7 @@ export const transform = {
   heading: "From forgettable to unforgettable.",
   sub: "Drag to see the difference a proper build makes.",
   // The "after" is the real, live kitchens site (rendered non-interactive).
-  afterUrl: "https://dordinator.github.io/kitched-bathroom-demo/",
+  afterUrl: "https://haza1410.github.io/kitched-bathroom-demo/",
   before: {
     label: "Before",
     name: "Typical template site",
