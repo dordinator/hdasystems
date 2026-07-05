@@ -20,7 +20,7 @@ export default function Footer() {
 
           <div>
             <div className="eyebrow mb-4">Explore</div>
-            <ul className="space-y-3">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2">
               {nav.map((item) => (
                 <li key={item.href}>
                   <a
