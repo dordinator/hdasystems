@@ -58,7 +58,7 @@ export default function BeforeAfter() {
             <div className="absolute inset-0 bg-white">
               <iframe
                 src={transform.afterUrl}
-                title="Built by HDA Solutions — Stoneford Kitchens & Bathrooms"
+                title="Built by HDA Solutions — Ashcombe Kitchens & Bathrooms"
                 loading="lazy"
                 sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
                 className="h-full w-full"

@@ -73,7 +73,7 @@ export const caseStudies: CaseStudy[] = [
     url: "https://dordinator.github.io/pools-and-gardens/",
   },
   {
-    title: "Stoneford Kitchens & Bathrooms",
+    title: "Ashcombe Kitchens & Bathrooms",
     sector: "Renovations · Hertfordshire & N. London",
     blurb: "A polished renovation brand with a quote funnel, transformations slider and social proof front and centre.",
     tags: ["Web design", "Quote funnel", "Reviews"],
