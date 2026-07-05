@@ -110,35 +110,47 @@ function ComingSoon({ title, accent }: { title: string; accent: string }) {
   );
 }
 
-function CaseCard({ cs }: { cs: (typeof caseStudies)[number] }) {
+function CaseCard({
+  cs,
+  index,
+}: {
+  cs: (typeof caseStudies)[number];
+  index: number;
+}) {
+  const reversed = index % 2 === 1;
+
   return (
     <Reveal delay={0.05}>
       <div className="glass p-5 md:p-7">
-        <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
+        <div className="grid items-center gap-6 md:grid-cols-2 md:gap-10 lg:gap-14">
+          {/* meta */}
+          <div className={reversed ? "md:order-2" : "md:order-1"}>
             <div className="eyebrow">{cs.sector}</div>
-            <h3 className="display mt-2 text-2xl text-ink md:text-3xl">
+            <h3 className="display mt-3 text-2xl text-ink md:text-3xl lg:text-4xl">
               {cs.title}
             </h3>
-            <p className="mt-2 max-w-xl text-ink-muted">{cs.blurb}</p>
+            <p className="mt-4 max-w-md text-ink-muted">{cs.blurb}</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {cs.tags.map((t) => (
+                <span
+                  key={t}
+                  className="rounded-full border border-line bg-ink/[0.03] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-muted"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {cs.tags.map((t) => (
-              <span
-                key={t}
-                className="rounded-full border border-line bg-ink/[0.03] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-muted"
-              >
-                {t}
-              </span>
-            ))}
+
+          {/* live preview */}
+          <div className={reversed ? "md:order-1" : "md:order-2"}>
+            {cs.url ? (
+              <LivePreview url={cs.url} title={cs.title} accent={cs.accent} />
+            ) : (
+              <ComingSoon title={cs.title} accent={cs.accent} />
+            )}
           </div>
         </div>
-
-        {cs.url ? (
-          <LivePreview url={cs.url} title={cs.title} accent={cs.accent} />
-        ) : (
-          <ComingSoon title={cs.title} accent={cs.accent} />
-        )}
       </div>
     </Reveal>
   );
@@ -163,9 +175,9 @@ export default function CaseStudies() {
           </div>
         </Reveal>
 
-        <div className="flex flex-col gap-7">
-          {caseStudies.map((cs) => (
-            <CaseCard key={cs.title} cs={cs} />
+        <div className="flex flex-col gap-7 md:gap-12">
+          {caseStudies.map((cs, i) => (
+            <CaseCard key={cs.title} cs={cs} index={i} />
           ))}
         </div>
       </div>
