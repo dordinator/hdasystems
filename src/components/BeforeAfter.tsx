@@ -192,10 +192,10 @@ function LegacySite() {
     <div className="min-h-full w-full bg-white text-black" style={serif}>
       <div className="mx-auto max-w-[600px] px-6 py-5 text-center">
         <h1 className="text-2xl font-bold leading-tight md:text-3xl">
-          Dave&apos;s Kitchens &amp; Building
+          Ashcombe Kitchens &amp; Bathrooms
         </h1>
         <p className="mt-0.5 text-[12px] text-black/70 md:text-sm">
-          Kitchens, Bathrooms &amp; Extensions — Durham &amp; the North East
+          Kitchen &amp; bathroom renovations — Hertfordshire &amp; North London
         </p>
 
         <hr className="my-3 border-black/25" />
@@ -214,8 +214,8 @@ function LegacySite() {
 
         <h2 className="text-lg font-bold md:text-xl">Welcome to our website</h2>
         <p className="mt-2 text-[12px] leading-relaxed md:text-sm">
-          We are a family-run building firm with over 20 years of experience
-          fitting kitchens and bathrooms across the local area. We offer a
+          We are a local kitchen and bathroom fitting company with over 10 years
+          of experience across Hertfordshire and North London. We offer a
           friendly, reliable service and free, no-obligation quotes.
         </p>
 
@@ -226,8 +226,8 @@ function LegacySite() {
           <ul className="inline-block list-disc pl-5 text-left text-[12px] leading-relaxed md:text-sm">
             <li>Free quotes</li>
             <li>Fully insured</li>
-            <li>20+ years experience</li>
-            <li>Local, reliable team</li>
+            <li>10+ years experience</li>
+            <li>Watford &amp; surrounding areas</li>
           </ul>
         </div>
 
@@ -235,20 +235,20 @@ function LegacySite() {
         <h2 className="text-lg font-bold md:text-xl">Our Services</h2>
         <div className="mt-2 space-y-2.5 text-[12px] leading-relaxed md:text-sm">
           <p>
-            <b>Kitchens.</b> Full kitchen fitting and refurbishment, including
-            units, worktops, tiling and appliances. <Link>Read more</Link>
+            <b>Kitchens.</b> Kitchen fitting and refurbishment, including
+            units, worktops and tiling. <Link>Read more</Link>
           </p>
           <p>
             <b>Bathrooms.</b> Bathroom installations, showers, tiling and
             plumbing. <Link>Read more</Link>
           </p>
           <p>
-            <b>Extensions.</b> Single and double-storey extensions and
-            knock-throughs. <Link>Read more</Link>
+            <b>Ensuites.</b> Compact ensuite upgrades and walk-in showers.{" "}
+            <Link>Read more</Link>
           </p>
           <p>
-            <b>General building.</b> Brickwork, plastering, groundwork and
-            general repairs. <Link>Read more</Link>
+            <b>Worktops &amp; tiling.</b> Quartz worktops and wall/floor
+            tiling. <Link>Read more</Link>
           </p>
         </div>
 
@@ -266,18 +266,18 @@ function LegacySite() {
         <hr className="my-4 border-black/25" />
         <h2 className="text-lg font-bold md:text-xl">About Us</h2>
         <p className="mt-2 text-[12px] leading-relaxed md:text-sm">
-          Established in 1998, we have built a strong reputation across the
-          region for quality workmanship and tidy, professional service. No job
-          is too big or too small. All work is fully guaranteed.
+          Established in Watford, we have built a reputation across Hertfordshire
+          and North London for quality kitchen and bathroom work. No job is too
+          big or too small. All work is fully guaranteed.
         </p>
 
         <hr className="my-4 border-black/25" />
         <h2 className="text-lg font-bold md:text-xl">Contact Us</h2>
         <p className="mt-2 text-[12px] leading-relaxed md:text-sm">
-          For a free quote, call <b>07XXX 123456</b> or email{" "}
-          <Link>info@daveskitchens.co.uk</Link>.
+          For a free quote, call <b>01923 555 014</b> or email{" "}
+          <Link>hello@ashcombekb.co.uk</Link>.
           <br />
-          11 Example Road, Durham, DH1 5LJ
+          Unit 4, Clarendon Studios, Watford, WD17 1JA
         </p>
         <button className="mt-2 border border-[#999] bg-[#eee] px-3 py-1 text-[12px] md:text-sm">
           Contact us
@@ -285,7 +285,7 @@ function LegacySite() {
 
         <hr className="my-4 border-black/25" />
         <p className="pb-2 text-[10px] text-black/45 md:text-[11px]">
-          © 2024 Dave&apos;s Kitchens &amp; Building. All rights reserved.
+          © 2024 Ashcombe Kitchens &amp; Bathrooms. All rights reserved.
         </p>
       </div>
     </div>

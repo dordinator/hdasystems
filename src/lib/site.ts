@@ -65,6 +65,14 @@ type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
+    title: "Tillett & Saunders",
+    sector: "Builders & renovations · London",
+    blurb: "A premium, trust-first site with quote capture for a 25-year home-building firm.",
+    tags: ["Web design", "Lead capture", "SEO"],
+    accent: "#7f8a6f",
+    url: "https://tillettandsaunders.co.uk",
+  },
+  {
     title: "Stoneford Pools & Landscapes",
     sector: "Pools · Landscaping · Hertfordshire",
     blurb: "A premium, conversion-led site for luxury pool and garden projects — built to turn browsers into booked consultations.",
@@ -80,14 +88,6 @@ export const caseStudies: CaseStudy[] = [
     accent: "#c99a5b",
     url: "https://haza1410.github.io/kitched-bathroom-demo/",
   },
-  {
-    title: "Tillett & Saunders",
-    sector: "Builders & renovations · London",
-    blurb: "A premium, trust-first site with quote capture for a 25-year home-building firm.",
-    tags: ["Web design", "Lead capture", "SEO"],
-    accent: "#7f8a6f",
-    url: "https://tillettandsaunders.co.uk",
-  },
 ];
 
 export const transform = {
@@ -98,12 +98,12 @@ export const transform = {
   afterUrl: "https://haza1410.github.io/kitched-bathroom-demo/",
   before: {
     label: "Before",
-    name: "Typical template site",
+    name: "Ashcombe — old template site",
     points: ["Generic & forgettable", "Few ways to capture leads", "Hard to find on Google"],
   },
   after: {
     label: "After",
-    name: "Built by HDA Solutions",
+    name: "Ashcombe — built by HDA Solutions",
     points: ["Premium & fast", "Quote funnel built in", "Ranking & converting"],
   },
 };
