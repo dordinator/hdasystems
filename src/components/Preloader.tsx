@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { BRAND } from "@/lib/site";
 
 const SCENE_READY_EVENT = "hda:scene-ready";
 const MIN_SHOW_MS = 500; // avoid a flicker on fast/cached loads
@@ -67,7 +68,7 @@ export default function Preloader() {
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent-terra" />
           </span>
           <span className="font-serif text-xl font-semibold tracking-tight text-ink">
-            HDA Solutions
+            {BRAND}
           </span>
         </div>
 

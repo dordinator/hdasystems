@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { transform } from "@/lib/site";
+import { BRAND, transform } from "@/lib/site";
 import Reveal from "./Reveal";
 
 const serif = { fontFamily: '"Times New Roman", Times, serif' } as const;
@@ -34,7 +34,7 @@ export default function BeforeAfter() {
   }, []);
 
   return (
-    <section className="relative py-24 md:py-32">
+    <section className="relative hidden py-24 md:block md:py-32">
       <div className="container-x">
         <Reveal>
           <div className="mb-10 text-center">
@@ -43,8 +43,13 @@ export default function BeforeAfter() {
               From forgettable to{" "}
               <span className="text-gradient">unforgettable.</span>
             </h2>
-            <p className="mt-4 text-ink-muted">
-              Drag the handle to compare — and hover either side to scroll it.
+            <p className="mt-4 text-balance text-ink-muted">
+              <span className="hidden md:inline">
+                Drag the handle to compare — and hover either side to scroll it.
+              </span>
+              <span className="md:hidden">
+                Drag the handle to compare before and after.
+              </span>
             </p>
           </div>
         </Reveal>
@@ -58,7 +63,7 @@ export default function BeforeAfter() {
             <div className="absolute inset-0 bg-white">
               <iframe
                 src={transform.afterUrl}
-                title="Built by HDA Solutions — Ashcombe Kitchens & Bathrooms"
+                title={`Built by ${BRAND} — Ashcombe Kitchens & Bathrooms`}
                 loading="lazy"
                 sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
                 className="h-full w-full"
@@ -108,10 +113,10 @@ export default function BeforeAfter() {
               </div>
             </div>
 
-            <span className="pointer-events-none absolute left-4 top-4 z-10 rounded-full border border-line bg-base-800/85 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-ink-muted backdrop-blur">
+            <span className="pointer-events-none absolute left-2 top-2 z-10 rounded-full border border-line bg-base-800/85 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-muted backdrop-blur sm:left-4 sm:top-4 sm:px-3 sm:text-[10px]">
               {transform.before.label}
             </span>
-            <span className="pointer-events-none absolute right-4 top-4 z-10 rounded-full border border-accent-terra/40 bg-accent-terra/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-accent-terra backdrop-blur">
+            <span className="pointer-events-none absolute right-2 top-2 z-10 rounded-full border border-accent-terra/40 bg-accent-terra/10 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-accent-terra backdrop-blur sm:right-4 sm:top-4 sm:px-3 sm:text-[10px]">
               {transform.after.label}
             </span>
           </div>

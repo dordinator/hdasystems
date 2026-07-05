@@ -4,12 +4,12 @@
 // businesses. Flat £299/mo. Built to feel world-class.
 // ─────────────────────────────────────────────────────────────
 
-export const BRAND = "HDA Solutions";
+export const BRAND = "HDAsystems";
 export const BRAND_TAGLINE = "Websites engineered to win customers";
 // GoHighLevel booking widget — used for every "book a call" CTA.
 export const CAL_URL =
   "https://api.leadconnectorhq.com/widget/booking/GDQp7qTfhXknyIgF1MrZ";
-export const EMAIL = "hello@hdasolutions.co.uk";
+export const EMAIL = "hello@hdasystems.co.uk";
 
 export const nav = [
   { label: "Work", href: "#work" },
@@ -20,6 +20,7 @@ export const nav = [
 
 export const hero = {
   eyebrow: "Websites + leads · for your business",
+  eyebrowMobile: "Websites for your business",
   headline: ["Websites that", "win customers."],
   sub: "We design, build and run high-performing websites — and the lead engine behind them.",
   primaryCta: { label: "book a call", href: CAL_URL },
@@ -61,6 +62,7 @@ type CaseStudy = {
   tags: string[];
   accent: string;
   url: string | null; // live, embeddable site — null = coming soon
+  screenshot: string; // static preview for mobile
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -71,6 +73,7 @@ export const caseStudies: CaseStudy[] = [
     tags: ["Web design", "Lead capture", "SEO"],
     accent: "#7f8a6f",
     url: "https://tillettandsaunders.co.uk",
+    screenshot: "/work/tillett-saunders.jpg",
   },
   {
     title: "Stoneford Pools & Landscapes",
@@ -79,6 +82,7 @@ export const caseStudies: CaseStudy[] = [
     tags: ["Web design", "Lead capture", "Local SEO"],
     accent: "#c4623f",
     url: "https://haza1410.github.io/pools-and-gardens/",
+    screenshot: "/work/stoneford-pools.jpg",
   },
   {
     title: "Ashcombe Kitchens & Bathrooms",
@@ -87,6 +91,7 @@ export const caseStudies: CaseStudy[] = [
     tags: ["Web design", "Quote funnel", "Reviews"],
     accent: "#c99a5b",
     url: "https://haza1410.github.io/kitched-bathroom-demo/",
+    screenshot: "/work/ashcombe-kitchens.jpg",
   },
 ];
 
@@ -103,7 +108,7 @@ export const transform = {
   },
   after: {
     label: "After",
-    name: "Ashcombe — built by HDA Solutions",
+    name: `Ashcombe — built by ${BRAND}`,
     points: ["Premium & fast", "Quote funnel built in", "Ranking & converting"],
   },
 };
@@ -165,7 +170,7 @@ export const chatbot = {
   eyebrow: "Live demo",
   heading: "Meet your 24/7 assistant.",
   sub: "This is the kind of AI assistant we can put on your site. Ask it anything.",
-  greeting: "Hi! I'm the HDA Solutions assistant. Ask me about pricing, timelines or what's included.",
+  greeting: `Hi! I'm the ${BRAND} assistant. Ask me about pricing, timelines or what's included.`,
   suggestions: [
     {
       q: "How much does it cost?",

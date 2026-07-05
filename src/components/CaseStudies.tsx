@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { caseStudies } from "@/lib/site";
@@ -13,6 +14,60 @@ function hostOf(url: string) {
   } catch {
     return url;
   }
+}
+
+/* Static screenshot — tap through to the live site (mobile). */
+function ScreenshotPreview({
+  url,
+  title,
+  screenshot,
+  accent,
+}: {
+  url: string;
+  title: string;
+  screenshot: string;
+  accent: string;
+}) {
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group/shot relative block min-w-0 overflow-hidden rounded-2xl border border-line bg-base-800 transition-all duration-300 active:scale-[0.99]"
+      style={{
+        boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.5)",
+      }}
+    >
+      <div className="relative aspect-[16/10] w-full overflow-hidden">
+        <Image
+          src={screenshot}
+          alt={`${title} website`}
+          fill
+          sizes="100vw"
+          className="object-cover object-top transition-transform duration-500 group-hover/shot:scale-[1.02]"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/35 via-ink/5 to-transparent" />
+        <span
+          className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full border border-line bg-base-800/90 px-3 py-1.5 text-xs font-medium text-ink backdrop-blur-md"
+          style={{ boxShadow: `0 12px 28px -12px ${accent}55` }}
+        >
+          <span
+            className="h-1.5 w-1.5 rounded-full"
+            style={{ background: accent }}
+          />
+          View site ↗
+        </span>
+      </div>
+      <div className="flex items-center justify-between border-t border-line px-3 py-2.5">
+        <span className="truncate font-mono text-[10px] text-ink-faint">
+          {hostOf(url)}
+        </span>
+        <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-accent-terra">
+          Live
+        </span>
+      </div>
+    </a>
+  );
 }
 
 /* Live, interactive site preview that enlarges on hover so visitors
@@ -35,7 +90,7 @@ function LivePreview({
       initial={false}
       animate={{ height: active ? 600 : 380 }}
       transition={{ duration: 0.55, ease }}
-      className="group/preview relative overflow-hidden rounded-2xl border border-line bg-base-800"
+      className="group/preview relative min-w-0 overflow-hidden rounded-2xl border border-line bg-base-800"
       style={{
         boxShadow: active
           ? `0 40px 100px -40px ${accent}66, inset 0 1px 0 0 rgba(255,255,255,0.5)`
@@ -43,11 +98,11 @@ function LivePreview({
       }}
     >
       {/* browser chrome */}
-      <div className="relative z-10 flex items-center gap-1.5 border-b border-line bg-base-900/80 px-4 py-2.5 backdrop-blur">
-        <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
-        <span className="ml-3 flex-1 truncate rounded-full bg-ink/[0.04] px-3 py-1 font-mono text-[11px] text-ink-faint">
+      <div className="relative z-10 flex min-w-0 items-center gap-1 border-b border-line bg-base-900/80 px-3 py-2 backdrop-blur sm:gap-1.5 sm:px-4 sm:py-2.5">
+        <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
+        <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
+        <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
+        <span className="ml-0 min-w-0 flex-1 truncate rounded-full bg-ink/[0.04] px-2.5 py-1 font-mono text-[10px] text-ink-faint sm:ml-3 sm:px-3 sm:text-[11px]">
           {hostOf(url)}
         </span>
         <a
@@ -55,7 +110,7 @@ function LivePreview({
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
-          className="ml-2 rounded-full border border-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-muted transition-colors hover:border-accent-terra/50 hover:text-accent-terra"
+          className="ml-1 flex-none rounded-full border border-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-muted transition-colors hover:border-accent-terra/50 hover:text-accent-terra sm:ml-2 sm:px-2.5 sm:text-[10px]"
         >
           Open ↗
         </a>
@@ -71,7 +126,7 @@ function LivePreview({
         style={{ pointerEvents: active ? "auto" : "none" }}
       />
 
-      {/* hover-to-interact hint (fades out once active) */}
+      {/* hover-to-interact hint */}
       <div
         className={`pointer-events-none absolute inset-x-0 bottom-0 z-10 flex justify-center pb-5 transition-opacity duration-300 ${
           active ? "opacity-0" : "opacity-100"
@@ -91,7 +146,7 @@ function LivePreview({
 
 function ComingSoon({ title, accent }: { title: string; accent: string }) {
   return (
-    <div className="relative flex h-[380px] items-center justify-center overflow-hidden rounded-2xl border border-line bg-base-800">
+    <div className="relative flex h-[300px] items-center justify-center overflow-hidden rounded-2xl border border-line bg-base-800 md:h-[380px]">
       <div
         className="absolute inset-0 opacity-70"
         style={{
@@ -121,16 +176,16 @@ function CaseCard({
 
   return (
     <Reveal delay={0.05}>
-      <div className="glass p-5 md:p-7">
-        <div className="grid items-center gap-6 md:grid-cols-2 md:gap-10 lg:gap-14">
+      <div className="glass min-w-0 p-4 sm:p-5 md:p-7">
+        <div className="grid min-w-0 items-center gap-5 sm:gap-6 md:grid-cols-2 md:gap-10 lg:gap-14">
           {/* meta */}
-          <div className={reversed ? "md:order-2" : "md:order-1"}>
+          <div className={`min-w-0 ${reversed ? "md:order-2" : "md:order-1"}`}>
             <div className="eyebrow">{cs.sector}</div>
-            <h3 className="display mt-3 text-2xl text-ink md:text-3xl lg:text-4xl">
+            <h3 className="display mt-3 text-balance text-2xl text-ink md:text-3xl lg:text-4xl">
               {cs.title}
             </h3>
-            <p className="mt-4 max-w-md text-ink-muted">{cs.blurb}</p>
-            <div className="mt-6 flex flex-wrap gap-2">
+            <p className="mt-4 max-w-md text-balance text-ink-muted">{cs.blurb}</p>
+            <div className="mt-5 flex flex-wrap gap-2 md:mt-6">
               {cs.tags.map((t) => (
                 <span
                   key={t}
@@ -143,9 +198,21 @@ function CaseCard({
           </div>
 
           {/* live preview */}
-          <div className={reversed ? "md:order-1" : "md:order-2"}>
+          <div className={`min-w-0 ${reversed ? "md:order-1" : "md:order-2"}`}>
             {cs.url ? (
-              <LivePreview url={cs.url} title={cs.title} accent={cs.accent} />
+              <>
+                <div className="md:hidden">
+                  <ScreenshotPreview
+                    url={cs.url}
+                    title={cs.title}
+                    screenshot={cs.screenshot}
+                    accent={cs.accent}
+                  />
+                </div>
+                <div className="hidden md:block">
+                  <LivePreview url={cs.url} title={cs.title} accent={cs.accent} />
+                </div>
+              </>
             ) : (
               <ComingSoon title={cs.title} accent={cs.accent} />
             )}
@@ -168,9 +235,14 @@ export default function CaseStudies() {
                 Proof, not <span className="text-gradient">promises.</span>
               </h2>
             </div>
-            <p className="max-w-xs text-ink-muted">
-              These are real, live sites. Hover any one to scroll and click
-              through it — right here on the page.
+            <p className="max-w-xs text-balance text-ink-muted">
+              <span className="hidden md:inline">
+                These are real, live sites. Hover any one to scroll and click
+                through it — right here on the page.
+              </span>
+              <span className="md:hidden">
+                Real, live client sites — tap any preview to visit.
+              </span>
             </p>
           </div>
         </Reveal>

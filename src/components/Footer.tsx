@@ -2,7 +2,7 @@ import { BRAND, BRAND_TAGLINE, nav } from "@/lib/site";
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-line">
+    <footer className="relative border-t border-line pb-24 md:pb-0">
       <div className="container-x py-14">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">

@@ -7,13 +7,13 @@ export default function Stats() {
     <section className="relative py-16 md:py-24">
       <div className="container-x">
         <Reveal>
-          <div className="glass grid grid-cols-2 gap-px overflow-hidden rounded-3xl md:grid-cols-4">
+          <div className="glass grid grid-cols-1 gap-px overflow-hidden rounded-3xl min-[420px]:grid-cols-2 md:grid-cols-4">
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="flex flex-col gap-2 p-7 md:p-9"
+                className="flex min-w-0 flex-col gap-1.5 p-5 min-[420px]:p-6 md:gap-2 md:p-9"
               >
-                <div className="display text-4xl text-gradient-accent md:text-5xl">
+                <div className="display text-3xl text-gradient-accent min-[420px]:text-4xl md:text-5xl">
                   {s.display ? (
                     s.display
                   ) : (
@@ -24,7 +24,9 @@ export default function Stats() {
                     />
                   )}
                 </div>
-                <div className="text-sm text-ink-muted">{s.label}</div>
+                <div className="text-balance text-sm leading-snug text-ink-muted">
+                  {s.label}
+                </div>
               </div>
             ))}
           </div>

@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CAL_URL, chatbot } from "@/lib/site";
+import { BRAND, CAL_URL, chatbot } from "@/lib/site";
 import Reveal from "./Reveal";
 
 type Msg = { role: "bot" | "user"; text: string };
@@ -128,7 +128,7 @@ export default function ChatbotDemo() {
   return (
     <section id="demo" className="relative py-24 md:py-32">
       <div className="container-x">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
           <Reveal>
             <div>
               <span className="eyebrow">{chatbot.eyebrow}</span>
@@ -153,7 +153,7 @@ export default function ChatbotDemo() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <div className="glass flex h-[520px] flex-col overflow-hidden">
+            <div className="glass flex h-[min(520px,calc(100svh-12rem))] min-h-[420px] flex-col overflow-hidden sm:h-[520px] sm:min-h-0">
               {/* header */}
               <div className="flex items-center gap-3 border-b border-line px-5 py-4">
                 <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-accent-terra to-accent-clay text-[#fbf5ec]">
@@ -162,7 +162,7 @@ export default function ChatbotDemo() {
                 </span>
                 <div>
                   <div className="text-sm font-semibold text-ink">
-                    HDA Solutions Assistant
+                    {BRAND} Assistant
                   </div>
                   <div className="font-mono text-[10px] uppercase tracking-[0.15em] text-accent-sage">
                     Online

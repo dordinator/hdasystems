@@ -6,7 +6,7 @@ export default function Contact() {
     <section id="contact" className="relative py-24 md:py-32">
       <div className="container-x">
         <Reveal>
-          <div className="glass relative px-8 py-16 text-center md:px-14 md:py-24">
+          <div className="glass relative px-5 py-12 text-center sm:px-8 sm:py-16 md:px-14 md:py-24">
             {/* soft inner glow — clipped separately so heading glyphs aren't trimmed */}
             <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl">
               <div className="absolute inset-0 bg-[radial-gradient(60%_80%_at_50%_0%,rgba(196,98,63,0.12),transparent_60%)]" />
@@ -27,7 +27,7 @@ export default function Contact() {
                 href={cta.primary.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary mt-9 !px-12 !py-4 !text-lg"
+                className="btn-primary mt-8 w-full justify-center !px-8 !py-3.5 !text-base sm:mt-9 sm:w-auto sm:!px-12 sm:!py-4 sm:!text-lg"
               >
                 {cta.primary.label}
                 <span aria-hidden>↗</span>
