@@ -130,7 +130,7 @@ export const capabilities = {
     },
     {
       title: "Website chatbot",
-      desc: "An AI assistant on your site that answers questions and captures leads 24/7.",
+      desc: "Engage visitors in real time, answer their questions, and make leaving their details effortless.",
       icon: "chat",
     },
     {
