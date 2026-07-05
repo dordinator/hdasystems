@@ -70,7 +70,7 @@ export const caseStudies: CaseStudy[] = [
     blurb: "A premium, conversion-led site for luxury pool and garden projects — built to turn browsers into booked consultations.",
     tags: ["Web design", "Lead capture", "Local SEO"],
     accent: "#c4623f",
-    url: "https://dordinator.github.io/pools-and-gardens/",
+    url: "https://haza1410.github.io/pools-and-gardens/",
   },
   {
     title: "Ashcombe Kitchens & Bathrooms",
