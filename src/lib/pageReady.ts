@@ -1,9 +1,9 @@
 export const PAGE_READY_EVENT = "hda:page-ready";
 export const SCENE_READY_EVENT = "hda:scene-ready";
 
-type Gate = "hydrated" | "fonts" | "scene" | "media";
+type Gate = "hydrated" | "fonts" | "scene" | "images";
 
-const REQUIRED: Gate[] = ["hydrated", "fonts", "scene", "media"];
+const REQUIRED: Gate[] = ["hydrated", "fonts", "scene", "images"];
 const met = new Set<Gate>();
 let resolved = false;
 

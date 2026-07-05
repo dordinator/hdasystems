@@ -44,7 +44,7 @@ function ScreenshotPreview({
           alt={`${title} website`}
           fill
           sizes="100vw"
-          loading="eager"
+          priority
           className="object-cover object-top transition-transform duration-500 group-hover/shot:scale-[1.02]"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/35 via-ink/5 to-transparent" />
@@ -99,12 +99,15 @@ function LivePreview({
   url,
   title,
   accent,
+  screenshot,
 }: {
   url: string;
   title: string;
   accent: string;
+  screenshot: string;
 }) {
   const [active, setActive] = useState(false);
+  const [iframeReady, setIframeReady] = useState(false);
 
   return (
     <motion.div
@@ -122,15 +125,26 @@ function LivePreview({
     >
       <PreviewChrome url={url} />
 
-      {/* the live site */}
-      <iframe
-        src={url}
-        title={title}
-        loading="eager"
-        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-        className="h-[calc(100%-41px)] w-full bg-white"
-        style={{ pointerEvents: active ? "auto" : "none" }}
-      />
+      <div className="relative h-[calc(100%-41px)] w-full bg-white">
+        <Image
+          src={screenshot}
+          alt={title}
+          fill
+          sizes="(min-width: 768px) 50vw, 100vw"
+          priority
+          className="object-cover object-top"
+        />
+        <iframe
+          src={url}
+          title={title}
+          onLoad={() => setIframeReady(true)}
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+          className={`absolute inset-0 h-full w-full bg-white transition-opacity duration-500 ${
+            iframeReady ? "opacity-100" : "opacity-0"
+          }`}
+          style={{ pointerEvents: active ? "auto" : "none" }}
+        />
+      </div>
 
       {/* hover-to-interact hint */}
       <div
@@ -216,7 +230,12 @@ function CaseCard({
                   />
                 </div>
                 <div className="hidden md:block">
-                  <LivePreview url={cs.url} title={cs.title} accent={cs.accent} />
+                  <LivePreview
+                    url={cs.url}
+                    title={cs.title}
+                    accent={cs.accent}
+                    screenshot={cs.screenshot}
+                  />
                 </div>
               </>
             ) : (

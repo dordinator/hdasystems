@@ -7,6 +7,7 @@ import Aurora from "@/components/Aurora";
 import PageReadyGate from "@/components/PageReadyGate";
 import Preloader from "@/components/Preloader";
 import ScrollRestoration from "@/components/ScrollRestoration";
+import { PAGE_IMAGE_URLS } from "@/lib/preloadImages";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -33,6 +34,9 @@ export default function RootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable} ${fraunces.variable}`}
     >
       <head>
+        {PAGE_IMAGE_URLS.map((href) => (
+          <link key={href} rel="preload" as="image" href={href} />
+        ))}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{if('scrollRestoration'in history)history.scrollRestoration='manual';var n=performance.getEntriesByType('navigation')[0];if(n&&n.type==='reload'){if(location.hash)history.replaceState(null,'',location.pathname+location.search);scrollTo(0,0);}else if(!location.hash){scrollTo(0,0);}}catch(e){}})();`,

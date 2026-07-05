@@ -1,8 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import { BRAND, transform } from "@/lib/site";
 import Reveal from "./Reveal";
+
+const AFTER_SCREENSHOT = "/work/ashcombe-kitchens.jpg";
 
 const serif = { fontFamily: '"Times New Roman", Times, serif' } as const;
 const linkBlue = "#1a4ca3";
@@ -22,6 +25,7 @@ function Check({ ok }: { ok: boolean }) {
 export default function BeforeAfter() {
   const [pct, setPct] = useState(52);
   const [dragging, setDragging] = useState(false);
+  const [afterReady, setAfterReady] = useState(false);
   const draggingRef = useRef(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -59,14 +63,24 @@ export default function BeforeAfter() {
             ref={ref}
             className="glass relative aspect-[16/10] select-none overflow-hidden rounded-3xl md:aspect-[2/1]"
           >
-            {/* AFTER — real live site, scrollable on hover (underneath) */}
+            {/* AFTER — screenshot first, live site fades in on top */}
             <div className="absolute inset-0 bg-white">
+              <Image
+                src={AFTER_SCREENSHOT}
+                alt="Ashcombe Kitchens & Bathrooms — after"
+                fill
+                sizes="100vw"
+                priority
+                className="object-cover object-top"
+              />
               <iframe
                 src={transform.afterUrl}
                 title={`Built by ${BRAND} — Ashcombe Kitchens & Bathrooms`}
-                loading="eager"
+                onLoad={() => setAfterReady(true)}
                 sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                className="h-full w-full"
+                className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${
+                  afterReady ? "opacity-100" : "opacity-0"
+                }`}
                 style={{ border: 0, pointerEvents: dragging ? "none" : "auto" }}
               />
             </div>

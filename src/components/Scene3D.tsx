@@ -13,7 +13,7 @@ import { Suspense, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { SCENE_READY_EVENT } from "@/lib/pageReady";
 
-const SCENE_SAFETY_MS = 7000;
+const SCENE_SAFETY_MS = 3000;
 
 // Signals once the 3D scene (incl. environment) has finished loading.
 function SceneReady() {

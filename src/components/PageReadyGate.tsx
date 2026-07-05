@@ -14,9 +14,9 @@ import {
   PAGE_READY_EVENT,
   SCENE_READY_EVENT,
 } from "@/lib/pageReady";
-import { waitForMedia } from "@/lib/waitForMedia";
+import { waitForPageImages } from "@/lib/preloadImages";
 
-const MAX_WAIT_MS = 15000;
+const MAX_WAIT_MS = 5000;
 
 const PageReadyContext = createContext(false);
 
@@ -35,8 +35,7 @@ export default function PageReadyGate({ children }: { children: ReactNode }) {
     const onSceneReady = () => markGate("scene");
     window.addEventListener(SCENE_READY_EVENT, onSceneReady);
 
-    // Images + case-study iframes load while the preloader covers the page.
-    void waitForMedia(document.body).then(() => markGate("media"));
+    void waitForPageImages().then(() => markGate("images"));
 
     const onPageReady = () => {
       setReady(true);
