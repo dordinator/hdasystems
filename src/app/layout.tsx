@@ -4,7 +4,6 @@ import { GeistMono } from "geist/font/mono";
 import { Fraunces } from "next/font/google";
 import { BRAND, BRAND_TAGLINE } from "@/lib/site";
 import Aurora from "@/components/Aurora";
-import PageReadyGate from "@/components/PageReadyGate";
 import Preloader from "@/components/Preloader";
 import ScrollRestoration from "@/components/ScrollRestoration";
 import { PAGE_IMAGE_URLS } from "@/lib/preloadImages";
@@ -47,7 +46,7 @@ export default function RootLayout({
         <ScrollRestoration />
         <Preloader />
         <Aurora />
-        <PageReadyGate>{children}</PageReadyGate>
+        <div className="relative z-10">{children}</div>
       </body>
     </html>
   );

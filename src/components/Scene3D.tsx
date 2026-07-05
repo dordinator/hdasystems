@@ -11,11 +11,10 @@ import {
 } from "@react-three/drei";
 import { Suspense, useEffect, useRef } from "react";
 import * as THREE from "three";
-import { SCENE_READY_EVENT } from "@/lib/pageReady";
+import { signalSceneReady } from "@/lib/pageReady";
 
-const SCENE_SAFETY_MS = 3000;
+const SCENE_SAFETY_MS = 2500;
 
-// Signals once the 3D scene (incl. environment) has finished loading.
 function SceneReady() {
   const { active, progress } = useProgress();
   const fired = useRef(false);
@@ -23,7 +22,7 @@ function SceneReady() {
   const fire = () => {
     if (fired.current) return;
     fired.current = true;
-    window.dispatchEvent(new Event(SCENE_READY_EVENT));
+    signalSceneReady();
   };
 
   useEffect(() => {

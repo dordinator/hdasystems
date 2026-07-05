@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { BRAND } from "@/lib/site";
-import { PAGE_READY_EVENT } from "@/lib/pageReady";
+import { preparePage } from "@/lib/preparePage";
+import { signalPageReady } from "@/lib/pageReady";
 import { isPageReload, scrollToTop } from "@/lib/scroll";
 
-const MIN_SHOW_MS = 500; // avoid a flicker on fast/cached loads
+const MIN_SHOW_MS = 400;
+const MAX_WAIT_MS = 6000;
 
 export default function Preloader() {
   const [ready, setReady] = useState(false);
@@ -14,22 +16,30 @@ export default function Preloader() {
   const start = useRef(Date.now());
 
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
+    let cancelled = false;
+    let done = false;
+    let minTimer: ReturnType<typeof setTimeout>;
 
-    const finish = () => {
-      const elapsed = Date.now() - start.current;
-      const wait = Math.max(0, MIN_SHOW_MS - elapsed);
-      timer = setTimeout(() => setReady(true), wait);
-    };
-
-    window.addEventListener(PAGE_READY_EVENT, finish);
-
-    // lock scroll while the loader is visible
     document.documentElement.style.overflow = "hidden";
 
+    const finish = () => {
+      if (cancelled || done) return;
+      done = true;
+      clearTimeout(hardStop);
+      signalPageReady();
+      const elapsed = Date.now() - start.current;
+      const wait = Math.max(0, MIN_SHOW_MS - elapsed);
+      minTimer = setTimeout(() => setReady(true), wait);
+    };
+
+    const hardStop = setTimeout(finish, MAX_WAIT_MS);
+
+    void preparePage().then(finish);
+
     return () => {
-      window.removeEventListener(PAGE_READY_EVENT, finish);
-      clearTimeout(timer);
+      cancelled = true;
+      clearTimeout(hardStop);
+      clearTimeout(minTimer);
     };
   }, []);
 
@@ -39,7 +49,7 @@ export default function Preloader() {
     if (isPageReload() || !window.location.hash) {
       scrollToTop();
     }
-    const t = setTimeout(() => setGone(true), 750); // after fade-out
+    const t = setTimeout(() => setGone(true), 500);
     return () => clearTimeout(t);
   }, [ready]);
 
@@ -48,11 +58,10 @@ export default function Preloader() {
   return (
     <div
       aria-hidden
-      className={`fixed inset-0 z-[200] flex items-center justify-center bg-base transition-opacity duration-700 ease-out ${
+      className={`fixed inset-0 z-[200] flex items-center justify-center bg-base transition-opacity duration-500 ease-out ${
         ready ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      {/* soft warm glow, on-brand */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/2 top-1/2 h-[55vmax] w-[55vmax] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(196,98,63,0.14),rgba(217,140,106,0.07)_45%,transparent_70%)] blur-[120px]" />
       </div>
@@ -73,7 +82,6 @@ export default function Preloader() {
           </span>
         </div>
 
-        {/* indeterminate progress bar */}
         <div className="relative h-px w-44 overflow-hidden rounded-full bg-ink/10">
           <motion.div
             className="absolute inset-y-0 w-1/3 rounded-full bg-gradient-to-r from-transparent via-accent-terra to-transparent"
