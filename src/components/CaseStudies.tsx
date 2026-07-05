@@ -1,12 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { motion } from "framer-motion";
 import { caseStudies } from "@/lib/site";
 import Reveal from "./Reveal";
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 function hostOf(url: string) {
   try {
@@ -16,7 +12,7 @@ function hostOf(url: string) {
   }
 }
 
-/* Static screenshot — tap through to the live site (mobile). */
+/* Static screenshot — click through to the live site. */
 function ScreenshotPreview({
   url,
   title,
@@ -43,7 +39,7 @@ function ScreenshotPreview({
           src={screenshot}
           alt={`${title} website`}
           fill
-          sizes="100vw"
+          sizes="(min-width: 768px) 50vw, 100vw"
           priority
           className="object-cover object-top transition-transform duration-500 group-hover/shot:scale-[1.02]"
         />
@@ -68,99 +64,6 @@ function ScreenshotPreview({
         </span>
       </div>
     </a>
-  );
-}
-
-/* Live, interactive site preview that enlarges on hover so visitors
-   can scroll and click through the real site (Cuberto-style). */
-function PreviewChrome({ url }: { url: string }) {
-  return (
-    <div className="relative z-10 flex min-w-0 items-center gap-1 border-b border-line bg-base-900/80 px-3 py-2 backdrop-blur sm:gap-1.5 sm:px-4 sm:py-2.5">
-      <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
-      <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
-      <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
-      <span className="ml-0 min-w-0 flex-1 truncate rounded-full bg-ink/[0.04] px-2.5 py-1 font-mono text-[10px] text-ink-faint sm:ml-3 sm:px-3 sm:text-[11px]">
-        {hostOf(url)}
-      </span>
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
-        className="ml-1 flex-none rounded-full border border-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-muted transition-colors hover:border-accent-terra/50 hover:text-accent-terra sm:ml-2 sm:px-2.5 sm:text-[10px]"
-      >
-        Open ↗
-      </a>
-    </div>
-  );
-}
-
-function LivePreview({
-  url,
-  title,
-  accent,
-  screenshot,
-}: {
-  url: string;
-  title: string;
-  accent: string;
-  screenshot: string;
-}) {
-  const [active, setActive] = useState(false);
-  const [iframeReady, setIframeReady] = useState(false);
-
-  return (
-    <motion.div
-      onMouseEnter={() => setActive(true)}
-      onMouseLeave={() => setActive(false)}
-      initial={false}
-      animate={{ height: active ? 600 : 380 }}
-      transition={{ duration: 0.55, ease }}
-      className="group/preview relative min-w-0 overflow-hidden rounded-2xl border border-line bg-base-800"
-      style={{
-        boxShadow: active
-          ? `0 40px 100px -40px ${accent}66, inset 0 1px 0 0 rgba(255,255,255,0.5)`
-          : "inset 0 1px 0 0 rgba(255,255,255,0.5)",
-      }}
-    >
-      <PreviewChrome url={url} />
-
-      <div className="relative h-[calc(100%-41px)] w-full bg-white">
-        <Image
-          src={screenshot}
-          alt={title}
-          fill
-          sizes="(min-width: 768px) 50vw, 100vw"
-          priority
-          className="object-cover object-top"
-        />
-        <iframe
-          src={url}
-          title={title}
-          onLoad={() => setIframeReady(true)}
-          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-          className={`absolute inset-0 h-full w-full bg-white transition-opacity duration-500 ${
-            iframeReady ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ pointerEvents: active ? "auto" : "none" }}
-        />
-      </div>
-
-      {/* hover-to-interact hint */}
-      <div
-        className={`pointer-events-none absolute inset-x-0 bottom-0 z-10 flex justify-center pb-5 transition-opacity duration-300 ${
-          active ? "opacity-0" : "opacity-100"
-        }`}
-      >
-        <span className="flex items-center gap-2 rounded-full border border-line bg-base-800/90 px-4 py-2 text-sm text-ink backdrop-blur-md">
-          <span
-            className="h-1.5 w-1.5 rounded-full"
-            style={{ background: accent }}
-          />
-          Hover to explore — scroll &amp; click the live site
-        </span>
-      </div>
-    </motion.div>
   );
 }
 
@@ -217,27 +120,15 @@ function CaseCard({
             </div>
           </div>
 
-          {/* live preview */}
+          {/* site preview */}
           <div className={`min-w-0 ${reversed ? "md:order-1" : "md:order-2"}`}>
             {cs.url ? (
-              <>
-                <div className="md:hidden">
-                  <ScreenshotPreview
-                    url={cs.url}
-                    title={cs.title}
-                    screenshot={cs.screenshot}
-                    accent={cs.accent}
-                  />
-                </div>
-                <div className="hidden md:block">
-                  <LivePreview
-                    url={cs.url}
-                    title={cs.title}
-                    accent={cs.accent}
-                    screenshot={cs.screenshot}
-                  />
-                </div>
-              </>
+              <ScreenshotPreview
+                url={cs.url}
+                title={cs.title}
+                screenshot={cs.screenshot}
+                accent={cs.accent}
+              />
             ) : (
               <ComingSoon title={cs.title} accent={cs.accent} />
             )}
@@ -261,13 +152,7 @@ export default function CaseStudies() {
               </h2>
             </div>
             <p className="max-w-xs text-balance text-ink-muted">
-              <span className="hidden md:inline">
-                These are real, live sites. Hover any one to scroll and click
-                through it — right here on the page.
-              </span>
-              <span className="md:hidden">
-                Real, live client sites — tap any preview to visit.
-              </span>
+              Real, live client sites — click any preview to visit.
             </p>
           </div>
         </Reveal>

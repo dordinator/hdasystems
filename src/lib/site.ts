@@ -62,7 +62,7 @@ type CaseStudy = {
   tags: string[];
   accent: string;
   url: string | null; // live, embeddable site — null = coming soon
-  screenshot: string; // static preview for mobile
+  screenshot: string;
 };
 
 export const caseStudies: CaseStudy[] = [
