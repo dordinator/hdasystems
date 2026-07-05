@@ -11,11 +11,11 @@ import {
 } from "@react-three/drei";
 import { Suspense, useEffect, useRef } from "react";
 import * as THREE from "three";
+import { SCENE_READY_EVENT } from "@/lib/pageReady";
 
-const SCENE_READY_EVENT = "hda:scene-ready";
+const SCENE_SAFETY_MS = 7000;
 
-// Tells the preloader the scene is fully rendered (incl. environment),
-// so it can fade out without the orb popping in afterwards.
+// Signals once the 3D scene (incl. environment) has finished loading.
 function SceneReady() {
   const { active, progress } = useProgress();
   const fired = useRef(false);
@@ -33,9 +33,9 @@ function SceneReady() {
     }
   }, [active, progress]);
 
-  // Floor: never make the loader wait longer than this once mounted.
+  // Safety net only if assets hang after the canvas has mounted.
   useEffect(() => {
-    const t = setTimeout(fire, 2500);
+    const t = setTimeout(fire, SCENE_SAFETY_MS);
     return () => clearTimeout(t);
   }, []);
 

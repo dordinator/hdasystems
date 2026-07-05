@@ -3,11 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { BRAND } from "@/lib/site";
+import { PAGE_READY_EVENT } from "@/lib/pageReady";
 import { isPageReload, scrollToTop } from "@/lib/scroll";
 
-const SCENE_READY_EVENT = "hda:scene-ready";
 const MIN_SHOW_MS = 500; // avoid a flicker on fast/cached loads
-const MAX_WAIT_MS = 4500; // hard fallback so it never hangs
 
 export default function Preloader() {
   const [ready, setReady] = useState(false);
@@ -23,15 +22,13 @@ export default function Preloader() {
       timer = setTimeout(() => setReady(true), wait);
     };
 
-    window.addEventListener(SCENE_READY_EVENT, finish);
-    const hardStop = setTimeout(finish, MAX_WAIT_MS);
+    window.addEventListener(PAGE_READY_EVENT, finish);
 
     // lock scroll while the loader is visible
     document.documentElement.style.overflow = "hidden";
 
     return () => {
-      window.removeEventListener(SCENE_READY_EVENT, finish);
-      clearTimeout(hardStop);
+      window.removeEventListener(PAGE_READY_EVENT, finish);
       clearTimeout(timer);
     };
   }, []);

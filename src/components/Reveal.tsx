@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { useIsClient } from "@/lib/useIsClient";
 
 type RevealProps = {
   children: ReactNode;
@@ -16,6 +17,12 @@ export default function Reveal({
   y = 28,
   className,
 }: RevealProps) {
+  const isClient = useIsClient();
+
+  if (!isClient) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}

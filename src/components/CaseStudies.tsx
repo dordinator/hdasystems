@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { caseStudies } from "@/lib/site";
+import { useIsClient } from "@/lib/useIsClient";
 import Reveal from "./Reveal";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -72,6 +73,28 @@ function ScreenshotPreview({
 
 /* Live, interactive site preview that enlarges on hover so visitors
    can scroll and click through the real site (Cuberto-style). */
+function PreviewChrome({ url }: { url: string }) {
+  return (
+    <div className="relative z-10 flex min-w-0 items-center gap-1 border-b border-line bg-base-900/80 px-3 py-2 backdrop-blur sm:gap-1.5 sm:px-4 sm:py-2.5">
+      <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
+      <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
+      <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
+      <span className="ml-0 min-w-0 flex-1 truncate rounded-full bg-ink/[0.04] px-2.5 py-1 font-mono text-[10px] text-ink-faint sm:ml-3 sm:px-3 sm:text-[11px]">
+        {hostOf(url)}
+      </span>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        className="ml-1 flex-none rounded-full border border-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-muted transition-colors hover:border-accent-terra/50 hover:text-accent-terra sm:ml-2 sm:px-2.5 sm:text-[10px]"
+      >
+        Open ↗
+      </a>
+    </div>
+  );
+}
+
 function LivePreview({
   url,
   title,
@@ -81,7 +104,20 @@ function LivePreview({
   title: string;
   accent: string;
 }) {
+  const isClient = useIsClient();
   const [active, setActive] = useState(false);
+
+  if (!isClient) {
+    return (
+      <div
+        className="group/preview relative min-w-0 h-[380px] overflow-hidden rounded-2xl border border-line bg-base-800"
+        style={{ boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.5)" }}
+      >
+        <PreviewChrome url={url} />
+        <div className="h-[calc(100%-41px)] w-full bg-white" aria-hidden />
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -97,24 +133,7 @@ function LivePreview({
           : "inset 0 1px 0 0 rgba(255,255,255,0.5)",
       }}
     >
-      {/* browser chrome */}
-      <div className="relative z-10 flex min-w-0 items-center gap-1 border-b border-line bg-base-900/80 px-3 py-2 backdrop-blur sm:gap-1.5 sm:px-4 sm:py-2.5">
-        <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
-        <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
-        <span className="hidden h-2.5 w-2.5 flex-none rounded-full bg-ink/15 sm:block" />
-        <span className="ml-0 min-w-0 flex-1 truncate rounded-full bg-ink/[0.04] px-2.5 py-1 font-mono text-[10px] text-ink-faint sm:ml-3 sm:px-3 sm:text-[11px]">
-          {hostOf(url)}
-        </span>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          className="ml-1 flex-none rounded-full border border-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-muted transition-colors hover:border-accent-terra/50 hover:text-accent-terra sm:ml-2 sm:px-2.5 sm:text-[10px]"
-        >
-          Open ↗
-        </a>
-      </div>
+      <PreviewChrome url={url} />
 
       {/* the live site */}
       <iframe
