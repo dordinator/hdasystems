@@ -5,6 +5,7 @@ import { Fraunces } from "next/font/google";
 import { BRAND, BRAND_TAGLINE } from "@/lib/site";
 import Aurora from "@/components/Aurora";
 import Preloader from "@/components/Preloader";
+import ScrollRestoration from "@/components/ScrollRestoration";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -30,6 +31,7 @@ export default function RootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable} ${fraunces.variable}`}
     >
       <body className="grain relative min-h-screen font-sans antialiased">
+        <ScrollRestoration />
         <Preloader />
         <Aurora />
         <div className="relative z-10">{children}</div>
