@@ -8,7 +8,7 @@ import { signalPageReady } from "@/lib/pageReady";
 import { isPageReload, scrollToTop } from "@/lib/scroll";
 
 const MIN_SHOW_MS = 400;
-const MAX_WAIT_MS = 6000;
+const MAX_WAIT_MS = 10000;
 
 export default function Preloader() {
   const [ready, setReady] = useState(false);

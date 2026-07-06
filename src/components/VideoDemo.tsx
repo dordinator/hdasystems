@@ -12,23 +12,14 @@ export default function VideoDemo({ title, videoSrc, poster }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [started, setStarted] = useState(false);
 
-  // Load metadata only when the video scrolls into view.
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !videoSrc) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && video.preload === "none") {
-          video.preload = "metadata";
-          video.load();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(video);
-    return () => observer.disconnect();
+    if (video.preload === "none") {
+      video.preload = "metadata";
+    }
+    video.load();
   }, [videoSrc]);
 
   if (!videoSrc) {
@@ -64,7 +55,7 @@ export default function VideoDemo({ title, videoSrc, poster }: Props) {
           poster={poster}
           controls={started}
           playsInline
-          preload="none"
+          preload="metadata"
           className="demo-video absolute inset-0 h-full w-full object-cover"
           onPlay={() => setStarted(true)}
           onPause={() => {
