@@ -10,6 +10,30 @@ type Props = {
   onNavigate?: () => void;
 };
 
+function handleAnchorClick(
+  href: string,
+  e: MouseEvent<HTMLAnchorElement>,
+  onNavigate?: () => void
+) {
+  if (href.startsWith("#")) {
+    e.preventDefault();
+    scrollToAnchor(href);
+    onNavigate?.();
+    return;
+  }
+
+  const hashIndex = href.indexOf("#");
+  if (hashIndex > 0 && href.startsWith("/")) {
+    const path = href.slice(0, hashIndex);
+    const hash = href.slice(hashIndex);
+    if (path === window.location.pathname) {
+      e.preventDefault();
+      scrollToAnchor(hash);
+      onNavigate?.();
+    }
+  }
+}
+
 export default function AnchorLink({
   href,
   className,
@@ -20,12 +44,7 @@ export default function AnchorLink({
     <a
       href={href}
       className={className}
-      onClick={(e: MouseEvent<HTMLAnchorElement>) => {
-        if (!href.startsWith("#")) return;
-        e.preventDefault();
-        scrollToAnchor(href);
-        onNavigate?.();
-      }}
+      onClick={(e) => handleAnchorClick(href, e, onNavigate)}
     >
       {children}
     </a>

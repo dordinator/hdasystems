@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import { BRAND, transform } from "@/lib/site";
+import SeeItInActionLink from "./SeeItInActionLink";
 import Reveal from "./Reveal";
 
 const AFTER_SCREENSHOT = "/work/ashcombe-kitchens.jpg";
@@ -167,6 +168,12 @@ export default function BeforeAfter() {
                 ))}
               </ul>
             </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.2}>
+          <div className="mt-10 flex justify-center">
+            <SeeItInActionLink className="btn-ghost !px-8 !py-3.5 !text-base" />
           </div>
         </Reveal>
       </div>

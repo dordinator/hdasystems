@@ -9,6 +9,15 @@ const Scene3D = dynamic(() => import("@/components/Scene3D"), { ssr: false });
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
+function handleSecondaryClick(
+  href: string,
+  e: React.MouseEvent<HTMLAnchorElement>
+) {
+  if (!href.startsWith("#")) return;
+  e.preventDefault();
+  scrollToAnchor(href);
+}
+
 export default function Hero() {
   return (
     <section
@@ -74,10 +83,7 @@ export default function Hero() {
           </a>
           <a
             href={hero.secondaryCta.href}
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToAnchor(hero.secondaryCta.href);
-            }}
+            onClick={(e) => handleSecondaryClick(hero.secondaryCta.href, e)}
             className="btn-ghost justify-center !px-8 !py-3.5 !text-base !text-ink max-md:hover:!bg-transparent max-md:hover:!text-ink sm:!px-10 sm:!py-4 sm:!text-lg md:!px-12"
           >
             {hero.secondaryCta.label}

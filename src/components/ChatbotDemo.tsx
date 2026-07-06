@@ -9,6 +9,7 @@ import {
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BRAND, CAL_URL, chatbot } from "@/lib/site";
+import SeeItInActionLink from "./SeeItInActionLink";
 import Reveal from "./Reveal";
 
 type Msg = { role: "bot" | "user"; text: string };
@@ -155,6 +156,9 @@ export default function ChatbotDemo() {
                     </span>
                   )
                 )}
+              </div>
+              <div className="mt-8">
+                <SeeItInActionLink className="btn-ghost !px-6 !py-3 !text-sm" />
               </div>
             </div>
           </Reveal>

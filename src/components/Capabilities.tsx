@@ -1,4 +1,5 @@
 import { capabilities } from "@/lib/site";
+import SeeItInActionLink from "./SeeItInActionLink";
 import Reveal from "./Reveal";
 
 const icons: Record<string, React.ReactNode> = {
@@ -69,6 +70,12 @@ export default function Capabilities() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={0.1}>
+          <div className="mt-12 flex justify-center">
+            <SeeItInActionLink className="btn-ghost !px-8 !py-3.5 !text-base" />
+          </div>
+        </Reveal>
       </div>
     </section>
   );

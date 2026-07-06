@@ -110,6 +110,11 @@ body {
   .hairline {
     @apply border-line;
   }
+
+  /* Native video controls — warm dark bar, no third-party chrome */
+  .demo-video::-webkit-media-controls-panel {
+    background: linear-gradient(transparent, rgba(44, 38, 32, 0.88));
+  }
 }
 
 @layer utilities {

@@ -24,7 +24,7 @@ export default function Navbar() {
             : "border border-transparent bg-transparent"
         }`}
       >
-        <AnchorLink href="#top" className="flex items-center gap-2.5">
+        <AnchorLink href="/" className="flex items-center gap-2.5">
           <span className="relative flex h-2.5 w-2.5">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-terra opacity-60" />
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent-terra" />
