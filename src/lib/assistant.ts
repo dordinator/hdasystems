@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Knowledge base + behaviour rules for the HDAsystems assistant.
+// Knowledge base + behaviour rules for the HDA-Systems assistant.
 // This is the single source of truth the AI is grounded on. The
 // model must ONLY answer from these facts. Anything not covered
 // here → say so and offer a call. Keep this in sync with site.ts.

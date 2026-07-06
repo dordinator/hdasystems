@@ -9,7 +9,6 @@ import {
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BRAND, CAL_URL, chatbot } from "@/lib/site";
-import SeeItInActionLink from "./SeeItInActionLink";
 import Reveal from "./Reveal";
 
 type Msg = { role: "bot" | "user"; text: string };
@@ -141,8 +140,7 @@ export default function ChatbotDemo() {
             <div>
               <span className="eyebrow">{chatbot.eyebrow}</span>
               <h2 className="display mt-4 text-[clamp(2.2rem,5.5vw,4rem)] leading-[1] text-ink">
-                Meet your{" "}
-                <span className="text-gradient">24/7 assistant.</span>
+                {chatbot.heading}
               </h2>
               <p className="mt-5 max-w-md text-lg text-ink-muted">{chatbot.sub}</p>
               <div className="mt-7 flex flex-wrap gap-2">
@@ -158,7 +156,14 @@ export default function ChatbotDemo() {
                 )}
               </div>
               <div className="mt-8">
-                <SeeItInActionLink className="btn-ghost !px-6 !py-3 !text-sm" />
+                <a
+                  href={CAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-ghost !px-6 !py-3 !text-sm"
+                >
+                  Book a call
+                </a>
               </div>
             </div>
           </Reveal>

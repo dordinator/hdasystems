@@ -1,10 +1,25 @@
 "use client";
 
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { PAGE_READY_EVENT } from "@/lib/pageReady";
-import { isPageReload, runScrollRestoration, scrollToTop } from "@/lib/scroll";
+import {
+  isPageReload,
+  runScrollRestoration,
+  scrollToAnchorWhenReady,
+  scrollToTop,
+} from "@/lib/scroll";
+
+function scrollHomeHash() {
+  if (window.location.pathname !== "/") return;
+  const hash = window.location.hash;
+  if (hash) scrollToAnchorWhenReady(hash);
+}
 
 export default function ScrollRestoration() {
+  const pathname = usePathname();
+  const prevPathname = useRef<string | null>(null);
+
   // Run before first paint so reload doesn't flash the old scroll position.
   useLayoutEffect(() => {
     runScrollRestoration();
@@ -22,6 +37,17 @@ export default function ScrollRestoration() {
     window.addEventListener(PAGE_READY_EVENT, onPageReady);
     return () => window.removeEventListener(PAGE_READY_EVENT, onPageReady);
   }, []);
+
+  // Cross-page nav (e.g. /see-it-in-action → /#pricing) — scroll once home renders.
+  useEffect(() => {
+    if (prevPathname.current === null) {
+      prevPathname.current = pathname;
+      return;
+    }
+    if (prevPathname.current === pathname) return;
+    prevPathname.current = pathname;
+    scrollHomeHash();
+  }, [pathname]);
 
   return null;
 }

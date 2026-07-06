@@ -141,12 +141,12 @@ function CaseCard({
 
 export default function CaseStudies() {
   return (
-    <section id="work" className="relative py-24 md:py-32">
+    <section id="gallery" className="relative py-24 md:py-32">
       <div className="container-x">
         <Reveal>
           <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <span className="eyebrow">Selected work</span>
+              <span className="eyebrow">Gallery</span>
               <h2 className="display mt-4 text-[clamp(2.2rem,6vw,4.5rem)] text-ink">
                 Proof, not <span className="text-gradient">promises.</span>
               </h2>

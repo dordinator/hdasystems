@@ -36,6 +36,38 @@ export function scrollToAnchor(href: string) {
   clearUrlHash();
 }
 
+/** Retry scrolling until the target exists — needed after cross-page navigation. */
+export function scrollToAnchorWhenReady(
+  href: string,
+  { maxAttempts = 40, intervalMs = 50 } = {}
+) {
+  if (!href.startsWith("#")) return;
+
+  const id = href.slice(1);
+  if (!id || id === "top") {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    clearUrlHash();
+    return;
+  }
+
+  let attempts = 0;
+  const tryScroll = () => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      clearUrlHash();
+      return;
+    }
+
+    attempts += 1;
+    if (attempts < maxAttempts) {
+      setTimeout(tryScroll, intervalMs);
+    }
+  };
+
+  tryScroll();
+}
+
 /** Keep reloads at the top; strip stale #hash fragments left by nav clicks. */
 export function runScrollRestoration() {
   if ("scrollRestoration" in history) {

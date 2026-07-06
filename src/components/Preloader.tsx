@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { BRAND } from "@/lib/site";
 import { preparePage } from "@/lib/preparePage";
 import { signalPageReady } from "@/lib/pageReady";
-import { isPageReload, scrollToTop } from "@/lib/scroll";
+import { isPageReload, scrollToAnchorWhenReady, scrollToTop } from "@/lib/scroll";
 
 const MIN_SHOW_MS = 400;
 const MAX_WAIT_MS = 10000;
@@ -46,7 +46,10 @@ export default function Preloader() {
   useEffect(() => {
     if (!ready) return;
     document.documentElement.style.overflow = "";
-    if (isPageReload() || !window.location.hash) {
+    const hash = window.location.hash;
+    if (hash && window.location.pathname === "/") {
+      scrollToAnchorWhenReady(hash);
+    } else if (isPageReload() || !hash) {
       scrollToTop();
     }
     const t = setTimeout(() => setGone(true), 500);

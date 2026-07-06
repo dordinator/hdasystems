@@ -4,7 +4,7 @@
 // businesses. Flat £299/mo. Built to feel world-class.
 // ─────────────────────────────────────────────────────────────
 
-export const BRAND = "HDAsystems";
+export const BRAND = "HDA-Systems";
 export const BRAND_TAGLINE = "Websites engineered to win customers";
 // GoHighLevel booking widget — used for every "book a call" CTA.
 export const CAL_URL =
@@ -13,10 +13,10 @@ export const EMAIL = "hello@hdasystems.co.uk";
 export const SEE_IT_IN_ACTION_PATH = "/see-it-in-action";
 
 export const nav = [
-  { label: "Work", href: "/#work" },
+  { label: "Gallery", href: "/#gallery" },
   { label: "Capabilities", href: "/#capabilities" },
   { label: "Pricing", href: "/#pricing" },
-  { label: "Demo", href: "/#demo" },
+  { label: "Q&A", href: "/#demo" },
   { label: "See it in action", href: SEE_IT_IN_ACTION_PATH },
 ];
 
@@ -169,9 +169,9 @@ export const calculator = {
 };
 
 export const chatbot = {
-  eyebrow: "Live demo",
-  heading: "Meet your 24/7 assistant.",
-  sub: "This is the kind of AI assistant we can put on your site. Ask it anything.",
+  eyebrow: "Q&A",
+  heading: "Ask our assistant anything.",
+  sub: "Got questions? Ask away — and for more detail, book a call.",
   greeting: `Hi! I'm the ${BRAND} assistant. Ask me about pricing, timelines or what's included.`,
   suggestions: [
     {
