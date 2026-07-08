@@ -1,16 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import { useCallback, useRef, useState } from "react";
-import { BRAND, transform } from "@/lib/site";
-import SeeItInActionLink from "./SeeItInActionLink";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { transform } from "@/lib/site";
 import Reveal from "./Reveal";
-import SectionBackdrop, {
-  sectionContentClass,
-  sectionShellClass,
-} from "./SectionBackdrop";
-
-const AFTER_SCREENSHOT = "/work/ashcombe-kitchens.jpg";
 
 const serif = { fontFamily: '"Times New Roman", Times, serif' } as const;
 const linkBlue = "#1a4ca3";
@@ -18,8 +10,8 @@ const linkBlue = "#1a4ca3";
 function Check({ ok }: { ok: boolean }) {
   return (
     <span
-      className={`flex h-5 w-5 flex-none items-center justify-center rounded-full text-[11px] ${
-        ok ? "bg-accent-terra text-[#fbf5ec]" : "bg-ink/10 text-ink-faint"
+      className={`flex h-5 w-5 flex-none items-center justify-center rounded-md border-2 border-ink text-[11px] font-bold ${
+        ok ? "bg-accent-coral text-white" : "bg-base-100 text-ink-faint"
       }`}
     >
       {ok ? "✓" : "✕"}
@@ -30,7 +22,7 @@ function Check({ ok }: { ok: boolean }) {
 export default function BeforeAfter() {
   const [pct, setPct] = useState(52);
   const [dragging, setDragging] = useState(false);
-  const [afterReady, setAfterReady] = useState(false);
+  const [frameWidth, setFrameWidth] = useState(0);
   const draggingRef = useRef(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -42,28 +34,30 @@ export default function BeforeAfter() {
     setPct(Math.min(94, Math.max(6, p)));
   }, []);
 
+  // Measure the frame so the "before" panel renders at full width and
+  // is only clipped by the slider — never squished.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () => setFrameWidth(el.getBoundingClientRect().width);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   return (
-    <section
-      className={sectionShellClass(
-        "hidden py-24 md:block md:py-32"
-      )}
-    >
-      <SectionBackdrop variant="dark-pricing" />
-      <div className={`container-x ${sectionContentClass()}`}>
+    <section className="section-alt relative py-24 md:py-32">
+      <div className="container-x">
         <Reveal>
           <div className="mb-10 text-center">
-            <span className="eyebrow text-accent-clay">{transform.eyebrow}</span>
-            <h2 className="display mt-4 text-[clamp(2rem,5.5vw,4rem)] text-[#fbf5ec]">
+            <span className="sticker">{transform.eyebrow}</span>
+            <h2 className="display mt-6 text-[clamp(2rem,5.5vw,4rem)] leading-[1.02] text-ink">
               From forgettable to{" "}
-              <span className="text-gradient">unforgettable.</span>
+              <span className="italic text-accent-coral">unforgettable.</span>
             </h2>
-            <p className="mt-4 text-balance text-[#c8bcab]">
-              <span className="hidden md:inline">
-                Drag the handle to compare — and hover either side to scroll it.
-              </span>
-              <span className="md:hidden">
-                Drag the handle to compare before and after.
-              </span>
+            <p className="mt-4 text-ink-muted">
+              Drag the handle to compare — and hover either side to scroll it.
             </p>
           </div>
         </Reveal>
@@ -71,38 +65,32 @@ export default function BeforeAfter() {
         <Reveal delay={0.1}>
           <div
             ref={ref}
-            className="glass relative aspect-[16/10] select-none overflow-hidden rounded-3xl md:aspect-[2/1]"
+            className="relative aspect-[16/10] select-none overflow-hidden rounded-2xl border-2 border-ink bg-base-50 shadow-card-lg md:aspect-[2/1]"
           >
-            {/* AFTER — screenshot first, live site fades in on top */}
+            {/* AFTER — real live site, scrollable on hover (underneath) */}
             <div className="absolute inset-0 bg-white">
-              <Image
-                src={AFTER_SCREENSHOT}
-                alt="Ashcombe Kitchens & Bathrooms — after"
-                fill
-                sizes="100vw"
-                priority
-                className="object-cover object-top"
-              />
               <iframe
                 src={transform.afterUrl}
-                title={`Built by ${BRAND} — Ashcombe Kitchens & Bathrooms`}
-                onLoad={() => setAfterReady(true)}
+                title="Built by HDA Systems — Stoneford Kitchens & Bathrooms"
+                loading="lazy"
                 sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${
-                  afterReady ? "opacity-100" : "opacity-0"
-                }`}
+                className="h-full w-full"
                 style={{ border: 0, pointerEvents: dragging ? "none" : "auto" }}
               />
             </div>
 
-            {/* BEFORE — dated page, scrollable on hover (clipped on top) */}
+            {/* BEFORE — dated page, clipped by the slider but rendered at
+                the full frame width so it never smooshes together. */}
             <div
-              className="absolute inset-0 overflow-hidden"
+              className="absolute inset-y-0 left-0 overflow-hidden"
               style={{ width: `${pct}%` }}
             >
               <div
-                className="h-full w-full overflow-y-auto overscroll-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                style={{ pointerEvents: dragging ? "none" : "auto" }}
+                className="h-full overflow-y-auto overscroll-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                style={{
+                  width: frameWidth ? `${frameWidth}px` : "100%",
+                  pointerEvents: dragging ? "none" : "auto",
+                }}
               >
                 <LegacySite />
               </div>
@@ -131,16 +119,16 @@ export default function BeforeAfter() {
               className="absolute inset-y-0 z-20 flex w-6 cursor-ew-resize touch-none items-center justify-center"
               style={{ left: `${pct}%`, transform: "translateX(-50%)" }}
             >
-              <div className="pointer-events-none h-full w-px bg-ink/30" />
-              <div className="pointer-events-none absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-base-800/90 text-ink shadow-lg backdrop-blur-md">
+              <div className="pointer-events-none h-full w-0.5 bg-ink" />
+              <div className="pointer-events-none absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-ink bg-accent-coral text-white shadow-card-sm">
                 ⇄
               </div>
             </div>
 
-            <span className="pointer-events-none absolute left-2 top-2 z-10 rounded-full border border-line bg-base-800/85 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-muted backdrop-blur sm:left-4 sm:top-4 sm:px-3 sm:text-[10px]">
+            <span className="pointer-events-none absolute left-4 top-4 z-10 rounded-lg border-2 border-ink bg-base-50 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink">
               {transform.before.label}
             </span>
-            <span className="pointer-events-none absolute right-2 top-2 z-10 rounded-full border border-accent-terra/40 bg-accent-terra/10 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-accent-terra backdrop-blur sm:right-4 sm:top-4 sm:px-3 sm:text-[10px]">
+            <span className="pointer-events-none absolute right-4 top-4 z-10 rounded-lg border-2 border-ink bg-accent-coral px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-white">
               {transform.after.label}
             </span>
           </div>
@@ -148,8 +136,8 @@ export default function BeforeAfter() {
 
         <Reveal delay={0.15}>
           <div className="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-2">
-            <div className="glass-soft p-5">
-              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-ink-faint">
+            <div className="card-soft p-5">
+              <div className="mb-3 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-ink-faint">
                 {transform.before.name}
               </div>
               <ul className="space-y-2.5">
@@ -164,8 +152,8 @@ export default function BeforeAfter() {
                 ))}
               </ul>
             </div>
-            <div className="glass-soft p-5">
-              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-accent-terra">
+            <div className="card-soft p-5">
+              <div className="mb-3 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-accent-coral">
                 {transform.after.name}
               </div>
               <ul className="space-y-2.5">
@@ -177,12 +165,6 @@ export default function BeforeAfter() {
                 ))}
               </ul>
             </div>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.2}>
-          <div className="mt-10 flex justify-center">
-            <SeeItInActionLink className="btn-ghost !border-[#fbf5ec]/30 !px-8 !py-3.5 text-[1rem] !text-[#fbf5ec] hover:!border-[#fbf5ec] hover:!bg-[#fbf5ec] hover:!text-ink" />
           </div>
         </Reveal>
       </div>
@@ -217,7 +199,7 @@ function LegacySite() {
       <img
         src={src}
         alt="Previous work"
-        loading="eager"
+        loading="lazy"
         className="h-full w-full object-cover"
       />
     </div>
@@ -227,10 +209,10 @@ function LegacySite() {
     <div className="min-h-full w-full bg-white text-black" style={serif}>
       <div className="mx-auto max-w-[600px] px-6 py-5 text-center">
         <h1 className="text-2xl font-bold leading-tight md:text-3xl">
-          Ashcombe Kitchens &amp; Bathrooms
+          Dave&apos;s Kitchens &amp; Building
         </h1>
         <p className="mt-0.5 text-[12px] text-black/70 md:text-sm">
-          Kitchen &amp; bathroom renovations — Hertfordshire &amp; North London
+          Kitchens, Bathrooms &amp; Extensions — Durham &amp; the North East
         </p>
 
         <hr className="my-3 border-black/25" />
@@ -249,8 +231,8 @@ function LegacySite() {
 
         <h2 className="text-lg font-bold md:text-xl">Welcome to our website</h2>
         <p className="mt-2 text-[12px] leading-relaxed md:text-sm">
-          We are a local kitchen and bathroom fitting company with over 10 years
-          of experience across Hertfordshire and North London. We offer a
+          We are a family-run building firm with over 20 years of experience
+          fitting kitchens and bathrooms across the local area. We offer a
           friendly, reliable service and free, no-obligation quotes.
         </p>
 
@@ -261,8 +243,8 @@ function LegacySite() {
           <ul className="inline-block list-disc pl-5 text-left text-[12px] leading-relaxed md:text-sm">
             <li>Free quotes</li>
             <li>Fully insured</li>
-            <li>10+ years experience</li>
-            <li>Watford &amp; surrounding areas</li>
+            <li>20+ years experience</li>
+            <li>Local, reliable team</li>
           </ul>
         </div>
 
@@ -270,20 +252,20 @@ function LegacySite() {
         <h2 className="text-lg font-bold md:text-xl">Our Services</h2>
         <div className="mt-2 space-y-2.5 text-[12px] leading-relaxed md:text-sm">
           <p>
-            <b>Kitchens.</b> Kitchen fitting and refurbishment, including
-            units, worktops and tiling. <Link>Read more</Link>
+            <b>Kitchens.</b> Full kitchen fitting and refurbishment, including
+            units, worktops, tiling and appliances. <Link>Read more</Link>
           </p>
           <p>
             <b>Bathrooms.</b> Bathroom installations, showers, tiling and
             plumbing. <Link>Read more</Link>
           </p>
           <p>
-            <b>Ensuites.</b> Compact ensuite upgrades and walk-in showers.{" "}
-            <Link>Read more</Link>
+            <b>Extensions.</b> Single and double-storey extensions and
+            knock-throughs. <Link>Read more</Link>
           </p>
           <p>
-            <b>Worktops &amp; tiling.</b> Quartz worktops and wall/floor
-            tiling. <Link>Read more</Link>
+            <b>General building.</b> Brickwork, plastering, groundwork and
+            general repairs. <Link>Read more</Link>
           </p>
         </div>
 
@@ -301,18 +283,18 @@ function LegacySite() {
         <hr className="my-4 border-black/25" />
         <h2 className="text-lg font-bold md:text-xl">About Us</h2>
         <p className="mt-2 text-[12px] leading-relaxed md:text-sm">
-          Established in Watford, we have built a reputation across Hertfordshire
-          and North London for quality kitchen and bathroom work. No job is too
-          big or too small. All work is fully guaranteed.
+          Established in 1998, we have built a strong reputation across the
+          region for quality workmanship and tidy, professional service. No job
+          is too big or too small. All work is fully guaranteed.
         </p>
 
         <hr className="my-4 border-black/25" />
         <h2 className="text-lg font-bold md:text-xl">Contact Us</h2>
         <p className="mt-2 text-[12px] leading-relaxed md:text-sm">
-          For a free quote, call <b>01923 555 014</b> or email{" "}
-          <Link>hello@ashcombekb.co.uk</Link>.
+          For a free quote, call <b>07XXX 123456</b> or email{" "}
+          <Link>info@daveskitchens.co.uk</Link>.
           <br />
-          Unit 4, Clarendon Studios, Watford, WD17 1JA
+          11 Example Road, Durham, DH1 5LJ
         </p>
         <button className="mt-2 border border-[#999] bg-[#eee] px-3 py-1 text-[12px] md:text-sm">
           Contact us
@@ -320,7 +302,7 @@ function LegacySite() {
 
         <hr className="my-4 border-black/25" />
         <p className="pb-2 text-[10px] text-black/45 md:text-[11px]">
-          © 2024 Ashcombe Kitchens &amp; Bathrooms. All rights reserved.
+          © 2024 Dave&apos;s Kitchens &amp; Building. All rights reserved.
         </p>
       </div>
     </div>

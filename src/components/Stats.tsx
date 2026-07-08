@@ -1,24 +1,23 @@
 import { stats } from "@/lib/site";
 import Counter from "./Counter";
 import Reveal from "./Reveal";
-import SectionBackdrop, {
-  sectionContentClass,
-  sectionShellClass,
-} from "./SectionBackdrop";
 
 export default function Stats() {
   return (
-    <section className={sectionShellClass("py-16 md:py-24")}>
-      <SectionBackdrop variant="recessed" />
-      <div className={`container-x ${sectionContentClass()}`}>
+    <section className="relative py-12 md:py-16">
+      <div className="container-x">
         <Reveal>
-          <div className="glass grid grid-cols-1 gap-px overflow-hidden rounded-3xl min-[420px]:grid-cols-2 md:grid-cols-4">
-            {stats.map((s) => (
+          <div className="grid grid-cols-2 overflow-hidden rounded-2xl border-2 border-ink bg-base-50 shadow-card md:grid-cols-4">
+            {stats.map((s, i) => (
               <div
                 key={s.label}
-                className="flex min-w-0 flex-col gap-1.5 p-5 min-[420px]:p-6 md:gap-2 md:p-9"
+                className={`flex flex-col gap-2 p-6 md:p-8 ${
+                  i % 2 === 0 ? "border-r-2 border-ink" : ""
+                } ${i < 2 ? "border-b-2 border-ink md:border-b-0" : ""} ${
+                  i === 2 ? "md:border-r-2 md:border-ink" : ""
+                }`}
               >
-                <div className="display text-3xl text-gradient-accent min-[420px]:text-4xl md:text-5xl">
+                <div className="display text-4xl text-accent-coral md:text-5xl">
                   {s.display ? (
                     s.display
                   ) : (
@@ -29,9 +28,7 @@ export default function Stats() {
                     />
                   )}
                 </div>
-                <div className="text-balance text-sm leading-snug text-ink-muted">
-                  {s.label}
-                </div>
+                <div className="text-sm text-ink-muted">{s.label}</div>
               </div>
             ))}
           </div>

@@ -3,16 +3,13 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Fraunces } from "next/font/google";
 import { BRAND, BRAND_TAGLINE } from "@/lib/site";
-import Aurora from "@/components/Aurora";
+import PaperBackground from "@/components/PaperBackground";
 import Preloader from "@/components/Preloader";
-import ScrollRestoration from "@/components/ScrollRestoration";
-import { PAGE_IMAGE_URLS } from "@/lib/preloadImages";
 import "./globals.css";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "900"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-fraunces",
   display: "swap",
 });
@@ -20,7 +17,7 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   title: `${BRAND} — ${BRAND_TAGLINE}`,
   description:
-    "We design, build and run high-performing websites and the lead engine behind them, for local businesses. One flat fee of £299/month.",
+    "We design, build and run high-performing websites and the lead engine behind them, for local businesses. Simple plans from £99/month.",
 };
 
 export default function RootLayout({
@@ -29,23 +26,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable} ${fraunces.variable}`}
     >
-      <head>
-        {PAGE_IMAGE_URLS.map((href) => (
-          <link key={href} rel="preload" as="image" href={href} />
-        ))}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{if('scrollRestoration'in history)history.scrollRestoration='manual';var n=performance.getEntriesByType('navigation')[0];if(n&&n.type==='reload'){if(location.hash)history.replaceState(null,'',location.pathname+location.search);scrollTo(0,0);}else if(!location.hash){scrollTo(0,0);}}catch(e){}})();`,
-          }}
-        />
-      </head>
       <body className="grain relative min-h-screen font-sans antialiased">
-        <ScrollRestoration />
         <Preloader />
-        <Aurora />
+        <PaperBackground />
         <div className="relative z-10">{children}</div>
       </body>
     </html>

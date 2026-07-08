@@ -4,8 +4,7 @@ import Stats from "@/components/Stats";
 import CaseStudies from "@/components/CaseStudies";
 import BeforeAfter from "@/components/BeforeAfter";
 import Capabilities from "@/components/Capabilities";
-import PricingCalculator from "@/components/PricingCalculator";
-import ChatbotDemo from "@/components/ChatbotDemo";
+import PricingTiers from "@/components/PricingTiers";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import StickyCta from "@/components/StickyCta";
@@ -19,8 +18,7 @@ export default function Home() {
       <CaseStudies />
       <BeforeAfter />
       <Capabilities />
-      <PricingCalculator />
-      <ChatbotDemo />
+      <PricingTiers />
       <Contact />
       <Footer />
       <StickyCta />
